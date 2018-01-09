@@ -80,11 +80,25 @@ class Wordvectorizer(object):
 
         return self.sentence_vectors
 
-    def evaluate(self):
-        pass
+    def evaluate(self, pairs):
+        # This expects input to be list of pairs of word, ex. [("กิน", "รับประทาน"), ("นอน", "หลับ")]
+        # and will return the list of those pairs with similarity
+        ret = []
+        for (first_word, second_word) in pairs:
+            # check if the word is in vocab
+            try:
+                self.model[first_word]
+            except KeyError:
+                print("The word {} is not in vocabulary !".format(first_word))
+            else:
+                try:
+                    self.model[second_word]
+                except KeyError:
+                    print("The word {} is not in vocabulary !".format(second_word))
+                else:
+                    ret.append((first_word, second_word, self.model.wv.similarity(first_word, second_word)))
+        return ret
 
 # word_vectorizer = Wordvectorizer()
-# for sentence_vector in word_vectorizer.predict("เรากินข้าว เธอกินข้าว"):
-#     print(type(sentence_vector))
-#     print(sentence_vector.shape)
+# print(word_vectorizer.evaluate([("รับประทาน", "กิน"), ("นอน", "พ่อ")]))
 
