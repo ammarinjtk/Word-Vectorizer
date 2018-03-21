@@ -1,5 +1,25 @@
 __pycache__/*
+
 .idea/*
-dataset/BEST2010/*
+
+dataset/*
+
+.ipynb_checkpoints/*
+
+metastore_db/*
 
 .idea/vcs.xml
+
+*.log
+
+fastText/
+
+fastText.py
+
+fasttext.ipynb
+
+fasttext.ipynb
+
+models/*
+
+models/word_vectorizer.bin
