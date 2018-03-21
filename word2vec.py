@@ -1,8 +1,8 @@
 import gensim
 import os
 import numpy as np
-from Word_Embedder.utils import find_low_freq_words
-from Word_Embedder.constant import BASE_DIR, DEFULT_MODEL_PATH, UNKNOWN_WORD, VECTOR_DIMENSION, CBOW_SG_FLAG
+from utils import find_low_freq_words
+from constant import BASE_DIR, DEFULT_MODEL_PATH, UNKNOWN_WORD, VECTOR_DIMENSION, CBOW_SG_FLAG
 
 
 class Bailarn_Word2Vec(object):
@@ -41,18 +41,46 @@ class Bailarn_Word2Vec(object):
         """
 
         # find all low frequency words, then change it to be "UNK"
-        low_freq_word_list = find_low_freq_words(sentences, threshold=5)
-        for i, sentence in enumerate(sentences):
-            for j, word in enumerate(sentence):
-                if word in low_freq_word_list:
-                    sentences[i][j] = UNKNOWN_WORD
+        low_freq_word = find_low_freq_words(sentences, threshold=5)
 
+        total_count = 0
+        for sentence in sentences:
+            total_count += len(sentence)
+        count = 0
+        print_threshold = 10000
+        threshold_count = 0
+        total_count = int(total_count / print_threshold)
+        for lst in sentences:
+            for ind, item in enumerate(lst):
+                count += 1
+                lst[ind] = low_freq_word.get(item, item)
+                if count >= print_threshold:
+                    count = 0
+                    print(threshold_count, "/", total_count)
+                    threshold_count += 1
+
+        # for i, sentence in enumerate(sentences):
+        #     for j, word in enumerate(sentence):
+        #         if word in low_freq_word_list:
+        #             count += 1
+        #             sentences[i][j] = UNKNOWN_WORD
+        #         if count >= print_threshold:
+        #             count = 0
+        #             print(threshold_count, "/", total_count)
+        #             threshold_count += 1
         # If new_model (empty) then the model should first build the vocab, update=False
         print("Start training model.")
+        for sentence in sentences:
+            if UNKNOWN_WORD in sentence:
+                print("UNK is here!")
+                break
         update = not self.new_model
         self.model.build_vocab(sentences, update=update)
-        self.model.train(
-            sentences, total_examples=self.model.corpus_count, epochs=self.model.iter)
+        if update:
+            self.model.train(
+                sentences, total_examples=self.model.corpus_count, epochs=self.model.iter)
+        else:
+            self.model.train(sentences)
         print("Saving model.")
         self.model.save(model_path)
 

@@ -1,5 +1,6 @@
 import re
 from functools import reduce
+import constant
 
 
 def clean_sentence(cleaned_sentence):
@@ -27,10 +28,10 @@ def find_low_freq_words(all_sentences, threshold=5):
             else:
                 count_dict[word] += 1
 
-    low_freq_words = []
+    low_freq_words = {}
     for key, value in count_dict.items():
         if value < threshold:
-            low_freq_words.append(key)
-    print(len(low_freq_words))
-    print(low_freq_words)
+            low_freq_words[key] = constant.UNKNOWN_WORD
+    # print(len(low_freq_words))
+    # print(low_freq_words)
     return low_freq_words

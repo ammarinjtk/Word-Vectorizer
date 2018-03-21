@@ -5,7 +5,7 @@ SEED = 1395096092
 
 # Model path
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
-DEFULT_MODEL_PATH = BASE_DIR + "/models/word_vectorizer.bin"
+DEFULT_MODEL_PATH = BASE_DIR + "/models/w2v.bin"
 
 # Unknown word
 UNKNOWN_WORD = 'UNK'
