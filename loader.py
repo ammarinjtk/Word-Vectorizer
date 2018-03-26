@@ -1,6 +1,6 @@
 import os
 import glob
-from utils import clean_sentence
+from Word_Embedder.utils import clean_sentence
 
 # GetCWD
 base_dir = os.path.dirname(os.path.abspath(__file__))

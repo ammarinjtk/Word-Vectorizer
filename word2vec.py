@@ -1,8 +1,8 @@
 import gensim
 import os
 import numpy as np
-from utils import find_low_freq_words
-from constant import BASE_DIR, DEFULT_MODEL_PATH, UNKNOWN_WORD, VECTOR_DIMENSION, CBOW_SG_FLAG
+from Word_Embedder.utils import find_low_freq_words
+from Word_Embedder.constant import BASE_DIR, DEFULT_MODEL_PATH, UNKNOWN_WORD, VECTOR_DIMENSION, CBOW_SG_FLAG
 
 
 class Bailarn_Word2Vec(object):
